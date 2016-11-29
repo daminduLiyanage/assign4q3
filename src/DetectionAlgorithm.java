@@ -27,9 +27,9 @@ public class DetectionAlgorithm {
         this.processNo = processNo;
     }
 
-    private boolean updateProcess(){
+    private boolean updateProcess(int requestNo){
         for(int i=0; i<allocated[this.processNo].length; i++) {
-            if (this.request[this.processNo][i] > work[i])
+            if (this.request[requestNo][i] > work[i])
                 return false;
             allocated[this.processNo][i] = allocated[this.processNo][i] -
                     this.request[this.processNo][i];
@@ -37,8 +37,8 @@ public class DetectionAlgorithm {
         return true;
     }
 
-    public void main(){
-        if(!updateProcess()) {
+    public void main(int requestNo){
+        if(!updateProcess(requestNo)) {
             System.out.println("Illegal Request. Check Resources for request again");
             return;
         }

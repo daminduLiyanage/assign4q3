@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 /**
  * Created by Damindu on 11/28/2016.
  */
@@ -25,9 +27,9 @@ public class SafetyAlgorithm {
         resetAllToUnfinish();
         searchAndFinish();
         if(checkFinish() == false)
-            System.out.println("No deadlocks");
+            System.out.println("Deadlocks possible: No finishing sequence is available since it is not safe");
         else
-            System.out.println("Deadlocks possible");
+            System.out.println("System Safe");
     }
 
     /**
@@ -39,6 +41,7 @@ public class SafetyAlgorithm {
         for(int j=0; j<RESOURCES; j++){
             this.work[j] += this.allocated[i][j];
         }
+        System.out.println("Process "+ (i+1) +" finished");
     }
 
     /**
@@ -53,12 +56,25 @@ public class SafetyAlgorithm {
 
 
     private void searchAndFinish(){
+        if(checkFinish())
+            return;
+        LinkedList<Integer> list = new LinkedList<>();
         for(int i=0; i<PROCESS; i++){
             if(checkNeedOfProcess(i) == true){
                 releaseResources(i);
                 this.finish[i] = true;
+            } else {
+                list.add(i);
             }
         }
+        while (!list.isEmpty()){
+            int i;
+            if(checkNeedOfProcess(i = list.removeFirst())){
+                releaseResources(i);
+                this.finish[i] = true;
+            }
+        }
+        checkFinish();
     }
 
     /**

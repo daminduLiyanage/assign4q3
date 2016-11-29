@@ -22,9 +22,9 @@ public class Test {
         DetectionAlgorithm banker2;
         int[][] request = input.getRequest();
         for (int i=0; i<request.length; i++) {
-            System.out.println("\nStatus of the system for request "+i+": ");
+            System.out.println("\nStatus of the system for request "+ (i+1) +": ");
             banker2 = new DetectionAlgorithm(input, request[i][0]);
-            banker2.main();
+            banker2.main(i);
         }
     }
 }
