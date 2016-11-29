@@ -1,7 +1,9 @@
+import java.io.IOException;
+
 /**
  * Created by Damindu on 11/28/2016.
  */
-public class BankersAlgorithm {
+public class DetectionAlgorithm {
     final int PROCESS = 5;
     final int RESOURCES = 4;
 
@@ -10,18 +12,36 @@ public class BankersAlgorithm {
     int[][] max;
     boolean[] finish;
     int[][] need;
+    int[][] request;
     private int[][] allocated;
+    private int processNo;
 
-    public BankersAlgorithm(Inputs input){
+    public DetectionAlgorithm(Inputs input, int processNo){
         this.work = input.getWork();
         this.available = input.getAvailable();
         this.max = input.getMax();
         this.finish = input.getFinish();
         this.need = input.getNeed();
         this.allocated = input.getAllocated();
+        this.request = input.getRequest();
+        this.processNo = processNo;
+    }
+
+    private boolean updateProcess(){
+        for(int i=0; i<allocated[this.processNo].length; i++) {
+            if (this.request[this.processNo][i] > work[i])
+                return false;
+            allocated[this.processNo][i] = allocated[this.processNo][i] -
+                    this.request[this.processNo][i];
+        }
+        return true;
     }
 
     public void main(){
+        if(!updateProcess()) {
+            System.out.println("Illegal Request. Check Resources for request again");
+            return;
+        }
         resetAllToUnfinish();
         searchAndFinish();
         if(checkFinish() == false)
@@ -83,4 +103,6 @@ public class BankersAlgorithm {
                 return false;
         return true;
     }
+
+
 }

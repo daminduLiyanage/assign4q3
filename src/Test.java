@@ -15,7 +15,16 @@ public class Test {
         }
 
         System.out.println("\nStatus of the system: ");
-        BankersAlgorithm banker = new BankersAlgorithm(input);
+        SafetyAlgorithm banker = new SafetyAlgorithm(input);
         banker.main();
+
+
+        DetectionAlgorithm banker2;
+        int[][] request = input.getRequest();
+        for (int i=0; i<request.length; i++) {
+            System.out.println("\nStatus of the system for request "+i+": ");
+            banker2 = new DetectionAlgorithm(input, request[i][0]);
+            banker2.main();
+        }
     }
 }
